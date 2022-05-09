@@ -32,14 +32,11 @@
 
 #include "w5500.h"
 #include <SPI.h>
-#include <peanutPayModules.h>
-
 
 
 uint8_t Wiznet5500::wizchip_read(uint8_t block, uint16_t address)
 {
     uint8_t ret;
-    storage.pause();
     wizchip_cs_select();
 
     block |= AccessModeRead;
@@ -51,7 +48,6 @@ uint8_t Wiznet5500::wizchip_read(uint8_t block, uint16_t address)
     ret = wizchip_spi_read_byte();
 
     wizchip_cs_deselect();
-    storage.resume();
     return ret;
 }
 
@@ -63,7 +59,6 @@ uint16_t Wiznet5500::wizchip_read_word(uint8_t block, uint16_t address)
 void Wiznet5500::wizchip_read_buf(uint8_t block, uint16_t address, uint8_t* pBuf, uint16_t len)
 {
     uint16_t i;
-    storage.pause();
     wizchip_cs_select();
 
     block |= AccessModeRead;
